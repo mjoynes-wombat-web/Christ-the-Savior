@@ -1,0 +1,370 @@
+/*Global Variables*/
+$main-font: 'Open Sans' sans-serif;                         //Primary font.
+
+  /*Colors*/
+  $cts-blue: #2E6091;                                       //Primary Blue
+  $cts-cream: #D7BE6D;                                      //Primary Cream
+  $cts-red: #C2757B;                                        //Primary Red
+
+  /*Color Usage*/
+  $accent-color: $cts-red;                                  //Accent Color
+
+@import "settings";
+@import "foundation";
+
+/*Styling Constants*/
+$primiary-section-margin: 30px;                             //Primary section bottom margin.
+$bottom-shadow: 0 2px 4px rgba($jet, 0.4);                  //Standard sshadow.
+$top-shadow: 2px 0 4px rgba($jet, 0.4);
+$shadow-lt-bg:2px 2px 4px rgba($jet, 0.8);
+$shadow-dk-bg:4px 4px 4px rgba($black, 1);
+
+@mixin section-spacing{                                     //Spacing between sections.
+  padding:10px;
+  margin-bottom:10px;
+}
+
+  /*Constructors*/
+  @mixin section-border-bottom ($color, $lighten) {         //Section bottom border constructor.
+    border-bottom: 1px lighten($color, $lighten) solid;
+  }
+
+  @mixin section-border-top ($color, $lighten) {         //Section bottom top constructor.
+    border-top: 1px lighten($color, $lighten) solid;
+  }
+
+
+/*General Styling*/
+.vAlign{                                                    //Vertical align assist.
+  display:inline-block;
+  height:100%;
+  vertical-align: middle;
+}
+
+  /*Headings*/
+  h1, h2, h3, h4, h5, h6{                                   //Heading styling.
+    color:$primary-color;
+    font-weight:600;
+  }
+
+  h3{                                                       //h3 spacing
+    margin-bottom:20px;
+
+    & > span:last-of-type{
+      font-size: ($h3-font-size * .8);
+      font-weight:400;
+    }
+  }
+
+  /*Panel*/
+  .panel{
+    h1, h2, h3, h4, h5, h6{                                //Panel header styling.
+      color:$primary-color;
+    }
+
+    h3{
+      margin-bottom:20px;
+    }
+  }
+
+/*Header Styling*/
+header {
+  background-color: $white;                               //Header bg color.
+  margin-bottom: $primiary-section-margin;                //Header bottom margin;
+
+  section.logo {                                        //Logo styling
+    background-color: $white;                             //Logo section bg color.
+    max-width:100%;                                       //Reset logo max width to allow full span.
+
+    @media only screen and (max-width: $medium-breakpoint) {  //Add border margin and box shadow on small screens to logo.
+      @include section-border-bottom($primary-color, 40%);      //Construct bottom border.
+      margin-bottom: $primiary-section-margin;                  //Bottom margin.
+      box-shadow: $bottom-shadow;                               //Add box shadow.
+    }
+
+    div{
+      @media only screen and (min-width: $medium-breakpoint) {
+        &.logo-icon {
+          min-width: 313px;                             //Add min-width for large screens.
+        }
+        &.logo-text {
+          img {
+            min-width: 585px;                           //Add min-width for large screens.
+          }
+        }
+      }
+    }
+  }
+}
+
+/*Top Bar Menu*/
+.top-bar{
+  box-shadow: $bottom-shadow;                         //Shadow for top bar menu.
+
+  .top-bar-section{
+    overflow:auto;                                   //Set auto overflow to display box shadow and border.
+    @include section-border-bottom($primary-color, 50%);  //Set border for top bar menu.
+
+    ul {
+      li {
+        a{
+          font-size: $topbar-link-font-size * .8;           //Alter font size for top-bar menu.
+
+          &.active{
+            background-color: darken($primary-color, 10%);  //Set bg color for active menu item.
+          }
+
+          &:hover {
+            background-color: $primary-color;               //Change bg color for hovered menu item.
+          }
+
+          &.button{
+            &.secondary{
+              &.small{
+                padding: 0.3rem 1rem 0.4rem 1rem;           //Padding for button on menu.
+                font-size: 0.9rem;                          //Font-size for button on menu.
+              }
+            }
+          }
+        }
+      }
+
+      &.email {
+        li:not(.has-form) {
+          &:not(:last-child) {
+            a:not(.button) {
+              padding-left: 0;                            //Left padding for text items in email section of top bar menu.
+              cursor: default;                            //Set default cursor for text items in email section of top bar menu.
+
+              &:hover{
+                background-color:$primary-color;          //Stop hover color change for text items in email section of top bar menu.
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/*Off Canvas Menu*/
+.tab-bar {
+  .tab-bar-section {
+    &.right{
+      ul.right.email{
+        display:inline;                                     //Setup consistent display for email text section of tab bar menu.
+        list-style:none;
+        line-height: 2.8125rem;
+
+        li{
+          float:left;
+
+          &:not(:last-child) a{
+            padding-left:0;
+          }
+
+          a{
+            font-size:0.9em;
+            color:$white;
+            padding:0 0.9375rem;
+
+            &:not(.button){
+              cursor:default;
+            }
+
+            &.button {
+              &.secondary {
+                &.small {
+                  padding: 0.3rem 1rem 0.4rem 1rem;
+                  font-size: 0.9rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+  /*Off Canvas List*/
+  .left-off-canvas-menu{
+    ul{
+      &.off-canvas-list{
+        li{
+          a{
+            &.active{
+              background-color: darken($primary-color, 10%);            //Change color of active menu item.
+            }
+          }
+        }
+      }
+    }
+  }
+
+/*Main Content*/
+main {
+  section{
+    & > div:not(.clearing-assembled) {
+      @include section-spacing;                                         //Add standard spacing around div children of sections in the main content.
+    }
+
+    &:first-child{                                                      //Styles for primary title section.
+      div{
+        *{
+          vertical-align: middle;                                       //Align styles in the middle.
+          display:inline-block;
+        }
+
+        img{                                                        //Styling for cross image.
+          max-height:90px;                                            //Setup responsive width and height mins and maxs.
+          min-height:60px;
+          min-width:45px;
+        }
+      }
+    }
+  }
+}
+
+  /*Gallery Lightbox*/
+
+  $lightbox-bg:darken($primary-color, 30%);                         //Lightbox background color.
+
+  main{
+    section{
+      div{
+        &.clearing-assembled{
+          &.clearing-blackout{
+            background:$lightbox-bg;                              //Set Lightbox background.
+
+            div{
+              &.visible-img{
+                background:$lightbox-bg;
+
+                img{
+                  border:4px solid lighten($primary-color, 50%);    //Style lightbox image
+                  margin:10px;
+                  box-shadow: $shadow-dk-bg;
+                  max-height:70%;
+                  max-width:90%;
+                  border-radius: $global-radius;
+                }
+
+                .clearing-caption{
+                  background:$lightbox-bg;
+                }
+              }
+              &.carousel{
+                background:$lightbox-bg;
+
+                li{
+                  border-top:2px solid lighten($primary-color, 50%);      //Style lightbox corousel images.
+                  border-bottom:2px solid lighten($primary-color, 50%);
+
+                  &.visible{
+                    border:2px solid lighten($primary-color, 50%);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /*Map Panel*/
+  .panel {
+    iframe{                                                 //Style iframes within a panel.
+      border:1px solid $primary-color;
+    }
+  }
+
+  /*Form*/
+  main{
+    form{
+      textarea{
+        min-height:300px;                               //Set margin and min height for text area.
+        margin-bottom:1rem;
+      }
+
+      button{
+        margin:.5rem 1rem;                              //Margin for form button.
+      }
+    }
+  }
+
+  /*Tables*/
+  table{
+    width:100%;                                           //Table styling
+    border-collapse: collapse;
+    border:1px solid lighten($primary-color, 10%);
+
+    tbody{
+      tr{
+        th{
+          text-align: right;                             //Table header styling.
+          width:20%;
+          padding-right:20px
+        }
+
+        td:first-of-type{
+          width:40%;                                    //Table cell styling
+        }
+      }
+    }
+  }
+
+  /*Footer*/
+  footer{
+    background:$primary-color;
+    color:$white;
+    margin-top: $primiary-section-margin;
+    box-shadow: $top-shadow;
+    @include section-border-top($primary-color, 40%);
+    text-align: center;
+
+    & > *{
+      @include section-spacing;
+    }
+  }
+
+
+// Or selectively include components
+// @import
+//   "foundation/components/accordion",
+//   "foundation/components/alert-boxes",
+//   "foundation/components/block-grid",
+//   "foundation/components/breadcrumbs",
+//   "foundation/components/button-groups",
+//   "foundation/components/buttons",
+//   "foundation/components/clearing",
+//   "foundation/components/dropdown",
+//   "foundation/components/dropdown-buttons",
+//   "foundation/components/flex-video",
+//   "foundation/components/forms",
+//   "foundation/components/grid",
+//   "foundation/components/inline-lists",
+//   "foundation/components/joyride",
+//   "foundation/components/keystrokes",
+//   "foundation/components/labels",
+//   "foundation/components/magellan",
+//   "foundation/components/orbit",
+//   "foundation/components/pagination",
+//   "foundation/components/panels",
+//   "foundation/components/pricing-tables",
+//   "foundation/components/progress-bars",
+//   "foundation/components/reveal",
+//   "foundation/components/side-nav",
+//   "foundation/components/split-buttons",
+//   "foundation/components/sub-nav",
+//   "foundation/components/switches",
+//   "foundation/components/tables",
+//   "foundation/components/tabs",
+//   "foundation/components/thumbs",
+//   "foundation/components/tooltips",
+//   "foundation/components/top-bar",
+//   "foundation/components/type",
+//   "foundation/components/offcanvas",
+//   "foundation/components/visibility";
+
